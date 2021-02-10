@@ -115,6 +115,11 @@ export default {
           dateOutputFormat: 'yyyy-MM-dd',
         },
         {
+          label: 'Login Count',
+          field: 'LoginCount',
+          type: 'number',
+        },
+        {
           label: 'Email',
           field: 'DomainName',
         },
@@ -138,7 +143,7 @@ export default {
       const businessUnitXml = this.selectedBuId
         ? `<condition entityname="su" attribute="businessunitid" operator="in"><value uitype="businessunit">{${this.selectedBuId}}</value></condition>`
         : '';
-      let fetchXml = `<fetch mapping="logical" aggregate="true" version="1.0" ><entity name="audit" ><attribute name="createdon" alias="lastlogin" aggregate="max" /><filter><condition attribute="operation" operator="eq" value="4" />${dateOnAfterXml}${dateOnBeforeXml}<condition entityname="su" attribute="isdisabled" operator="eq" value="0" /><condition entityname="su" attribute="accessmode" operator="not-in"><value>4</value><value>5</value></condition>${userEmailXml}${businessUnitXml}</filter><link-entity name="systemuser" from="systemuserid" to="objectid" alias="su" link-type="inner" ><attribute name="fullname" alias="fullname" groupby="true" /><attribute name="domainname" alias="domainname" groupby="true" /><attribute name="accessmode" alias="accessmode" groupby="true" /><attribute name="isdisabled" alias="isdisabled" groupby="true" /><attribute name="businessunitid" alias="businessunitid" groupby="true" /><attribute name="internalemailaddress" alias="internalemailaddress" groupby="true" /></link-entity></entity></fetch>`;
+      let fetchXml = `<fetch mapping="logical" aggregate="true" version="1.0" ><entity name="audit" ><attribute name="createdon" alias="lastlogin" aggregate="max" /><attribute name="auditid" alias="lastloginct" aggregate="count" /><filter><condition attribute="operation" operator="eq" value="4" />${dateOnAfterXml}${dateOnBeforeXml}<condition entityname="su" attribute="isdisabled" operator="eq" value="0" /><condition entityname="su" attribute="accessmode" operator="not-in"><value>4</value><value>5</value></condition>${userEmailXml}${businessUnitXml}</filter><link-entity name="systemuser" from="systemuserid" to="objectid" alias="su" link-type="inner" ><attribute name="fullname" alias="fullname" groupby="true" /><attribute name="domainname" alias="domainname" groupby="true" /><attribute name="accessmode" alias="accessmode" groupby="true" /><attribute name="isdisabled" alias="isdisabled" groupby="true" /><attribute name="businessunitid" alias="businessunitid" groupby="true" /><attribute name="internalemailaddress" alias="internalemailaddress" groupby="true" /></link-entity></entity></fetch>`;
       const fetchXmlEncoded = encodeURIComponent(fetchXml);
       await fetch(
         `${window.location.origin}/api/data/v${this.$apiVersion}/audits?fetchXml=${fetchXmlEncoded}`,
@@ -167,6 +172,7 @@ export default {
         return {
           FullName: obj.fullname,
           LastLoginDate: new Date(obj.lastlogin).toLocaleDateString('en-US'),
+          LoginCount: obj.lastloginct,
           DomainName: obj.domainname.toLowerCase(),
         };
       });
@@ -207,7 +213,7 @@ export default {
     },
 
     exportCsv() {
-      let csvResultSet = `data:text/csv;charset=utf-8,Full Name,Email,Last Login\n${this.exportArray
+      let csvResultSet = `data:text/csv;charset=utf-8,Full Name,Email,Last Login,Count\n${this.exportArray
         .map(e => e.join(','))
         .join('\n')}`;
       let csvAbsentUsers = `\n\nActive User/s not present in time-period:\n\n${this.returnAbsentUsers()}`;
@@ -280,6 +286,7 @@ export default {
         obj.FullName.replace(/[^a-zA-Z0-9-|_\s]/g, '').trim(),
         obj.DomainName,
         obj.LastLoginDate,
+        obj.LoginCount,
       ]);
     },
   },
