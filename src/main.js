@@ -5,10 +5,14 @@ import 'vue-good-table/dist/vue-good-table.css';
 import bulma from 'bulma/css/bulma.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCaretUp, faCaretDown, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import BuOptionControl from './components/BuOptionControl.vue'
-import EmailSearchControl from './components/EmailSearchControl.vue'
-import DateControl from './components/DateControl.vue'
+import {
+  faCaretUp,
+  faCaretDown,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons';
+import BuOptionControl from './components/BuOptionControl.vue';
+import EmailSearchControl from './components/EmailSearchControl.vue';
+import DateControl from './components/DateControl.vue';
 
 Vue.use(VueGoodTablePlugin, bulma, FontAwesomeIcon);
 library.add(faCaretUp, faCaretDown, faExclamationTriangle);
@@ -23,4 +27,4 @@ Vue.prototype.$apiVersion = '9.1';
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');

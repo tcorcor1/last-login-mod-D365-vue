@@ -1,11 +1,11 @@
 module.exports = {
-    configureWebpack: {
-        optimization: {
-            splitChunks: false
-        }
+  configureWebpack: {
+    optimization: {
+      splitChunks: false,
     },
-    productionSourceMap: false,
-    css: {
-        extract: false,
-    },
-}
+  },
+  productionSourceMap: false,
+  css: {
+    extract: false,
+  },
+};
