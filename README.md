@@ -2,6 +2,10 @@
 
 :construction: :construction: DISCLAIMER :construction: :construction:
 
+Feb 9, 2022
+
+UPDATE: Unfortunately, I have not seen a resolution to this issue after several months. As far as I know, the fix is still on the roadmap. I apologize for any inconvenience this causes you. I will report back as soon as I get more information.
+
 Aug 13, 2021
 
 Microsoft has recently made some architectural changes moving the audit table to a NoSQL database. During this transformational period fetch XML aggregation has been disabled on the audit table which breaks this tool. This update is being gradually rolled out to all regions and may not effect you YET but will eventually.
