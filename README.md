@@ -2,6 +2,10 @@
 
 :construction: :construction: DISCLAIMER :construction: :construction:
 
+March 9, 2022
+
+Fetch XML aggregation has been restored, however, groupby clauses do not work. I was informed this is a bug and will be rectified but was also told grouping by userid/lookups may not be supported anymore. Things seem to be changing a lot with this so I plan to await the MS bugfix before deciding whether to archive this project.
+
 Feb 9, 2022
 
 UPDATE: Unfortunately, I have not seen a resolution to this issue after several months. As far as I know, the fix is still on the roadmap. I apologize for any inconvenience this causes you. I will report back as soon as I get more information.
